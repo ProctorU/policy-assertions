@@ -1,7 +1,6 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require 'policy_assertions'
-require 'pundit'
 
 ActiveSupport::TestCase.test_order = :random
 

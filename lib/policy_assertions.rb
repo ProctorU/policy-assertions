@@ -1,4 +1,5 @@
 require 'rack'
+require 'pundit'
 require 'rack/test'
 require 'active_support'
 require 'action_controller/metal/strong_parameters'
