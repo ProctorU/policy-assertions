@@ -2,8 +2,11 @@ require 'rack'
 require 'pundit'
 require 'rack/test'
 require 'active_support'
-if Gem::Specification::find_all_by_name('strong_parameters').any?               
-  require 'strong_parameters'                                                   
+
+if Gem::Specification.find_all_by_name('strong_parameters').empty?
+  require 'action_controller/metal/strong_parameters'
+else
+  require 'strong_parameters'
 end
 
 require 'policy_assertions/errors'
