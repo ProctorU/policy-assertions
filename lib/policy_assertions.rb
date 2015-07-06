@@ -2,7 +2,7 @@ require 'rack'
 require 'pundit'
 require 'rack/test'
 require 'active_support'
-require 'action_controller/metal/strong_parameters'
+require 'strong_parameters'
 
 require 'policy_assertions/errors'
 require 'policy_assertions/version'
