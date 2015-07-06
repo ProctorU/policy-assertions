@@ -2,7 +2,9 @@ require 'rack'
 require 'pundit'
 require 'rack/test'
 require 'active_support'
-require 'strong_parameters'
+if Gem::Specification::find_all_by_name('strong_parameters').any?               
+  require 'strong_parameters'                                                   
+end
 
 require 'policy_assertions/errors'
 require 'policy_assertions/version'
