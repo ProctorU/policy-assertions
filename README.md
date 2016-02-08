@@ -143,10 +143,7 @@ end
 ### Strong Parameters
 Since Pundit offers a [permitted_attributes](https://github.com/elabs/pundit#strong-parameters) helper, policy-assertions provides an assert method for testing.
 
-To use this assertion the test class **must** match an existing policy with 'Test' appended. If the class name does not match a policy a PolicyAssertions::InvalidClassName error is thrown. See the code sample below.
-
 ```ruby
-# The class name matches the ArticlePolicy class.
 class ArticlePolicyTest < PolicyAssertions::Test
   # Test that a site staff member has access to the
   # parameters defined in the params method.

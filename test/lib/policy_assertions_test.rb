@@ -139,12 +139,11 @@ class StrongParametersTest < Minitest::Test
   end
 end
 
-class InvalidClassNameTest
+class DifferentClassNameTest
   class FakePolicyTest < PolicyAssertions::Test
     def test_strong_parameters
-      assert_raises(PolicyAssertions::InvalidClassName) do
-        assert_strong_parameters nil, Article, Article.params, [:user_id]
-      end
+      allowed = [:user_id, :title, :description]
+      assert_strong_parameters User.new(1), Article, Article.params, allowed
     end
   end
 end
@@ -155,6 +154,39 @@ class InvalidBlockParametersTest
       assert_raises(PolicyAssertions::MissingBlockParameters) do
         assert_permit nil, Article
       end
+    end
+  end
+end
+
+class DefinedPolicyClassTest
+  class PersonPolicyTest < PolicyAssertions::Test
+    def test_create_and_destroy
+      assert_permit User.new(100), User.new(101)
+    end
+
+    def test_strong_parameters
+      assert_strong_parameters nil, User, User.params, [:user_id, :name]
+    end
+  end
+end
+
+# rubocop:disable Style/ClassAndModuleChildren:
+class ModularizedPolicyClassTest
+  class Users::SessionPolicyTest < PolicyAssertions::Test
+    def test_create_and_destroy
+      assert_permit User.new(100), Users::Session.new(100)
+    end
+
+    def test_destroy
+      refute_permit User.new(100), Users::Session.new(101)
+      refute_permit nil, Users::Session.new
+    end
+
+    def test_strong_parameters
+      assert_strong_parameters User.new,
+                               Users::Session,
+                               Users::Session.params,
+                               [:id, :user_id]
     end
   end
 end

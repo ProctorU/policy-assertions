@@ -33,16 +33,18 @@ module PolicyAssertions
       end
     end
 
-    def assert_strong_parameters(user, record,
-                                 params_hash, allowed_params)
-      params = ActionController::Parameters.new(class_symbol => params_hash)
+    def assert_strong_parameters(user, record, params_hash, allowed_params)
+      policy = Pundit.policy!(user, record)
 
-      strong_params = params.require(class_symbol)
-                      .permit(*get_strong_params(user, record)).keys
+      param_key = find_param_key(record)
+
+      params = ActionController::Parameters.new(param_key => params_hash)
+
+      strong_params = params.require(param_key)
+                      .permit(*policy.permitted_attributes).keys
 
       strong_params.each do |param|
-        assert_includes allowed_params,
-                        param.to_sym,
+        assert_includes allowed_params, param.to_sym,
                         "User #{user} should not be permitted to "\
                         "update parameter [#{param}]"
       end
@@ -50,18 +52,15 @@ module PolicyAssertions
 
     private
 
-    def class_symbol
-      @class_symbol ||= klass.to_s.gsub(/Policy/, '').downcase.to_sym
-    end
-
-    def get_strong_params(user, record)
-      klass.new(user, record).permitted_attributes
-    end
-
-    def klass
-      @klass ||= self.class.name.demodulize.to_s.gsub(/Test/, '').constantize
-      rescue NameError
-        raise InvalidClassName
+    # borrowed from Pundit::PolicyFinder
+    def find_param_key(record)
+      if record.respond_to?(:model_name)
+        record.model_name.param_key.to_s
+      elsif record.is_a?(Class)
+        record.to_s.demodulize.underscore
+      else
+        record.class.to_s.demodulize.underscore
+      end
     end
 
     def get_permissions(permissions)

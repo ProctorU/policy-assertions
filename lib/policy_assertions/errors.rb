@@ -1,11 +1,4 @@
 module PolicyAssertions
-  class InvalidClassName < StandardError
-    def message
-      'The test class must be the same as a pundit policy class. ' \
-      'For example, RecordPolicyTest'
-    end
-  end
-
   class MissingBlockParameters < StandardError
     def message
       'PolicyTest must pass the permissions into the assert if called ' \
