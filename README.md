@@ -1,5 +1,5 @@
 # policy-assertions
-[![Build Status](https://travis-ci.org/ksimmons/policy-assertions.svg?branch=master)](https://travis-ci.org/ksimmons/policy-assertions)
+[![Build Status](https://travis-ci.org/ksimmons/policy-assertions.svg?branch=master)](https://travis-ci.org/ksimmons/policy-assertions) [![Gem Version](https://badge.fury.io/rb/policy-assertions.svg)](https://badge.fury.io/rb/policy-assertions)
 
 Minitest test assertions for [Pundit](https://github.com/elabs/pundit) policies.
 
