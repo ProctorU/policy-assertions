@@ -32,6 +32,7 @@ module PolicyAssertions
                "on #{record} for #{user} but it did"
       end
     end
+    alias assert_not_permitted refute_permit
 
     def assert_strong_parameters(user, record, params_hash, allowed_params)
       policy = Pundit.policy!(user, record)
