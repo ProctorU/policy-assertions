@@ -57,6 +57,8 @@ class ArticlePolicyTest < PolicyAssertions::Test
   # Test that this user cannot delete this article
   def test_destroy
     refute_permit users(:regular), articles(:instructions)
+    # Alternate method name
+    asssert_not_permitted users(:regular), articles(:instructions)
   end
 
   # Test a permission by passing in an array instead of
