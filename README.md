@@ -141,6 +141,11 @@ class ArticlePolicyTest < PolicyAssertions::Test
     assert_permit @user, Article, 'index?', 'show?'
   end
 
+  # Actions can also be passed as an array
+  test 'index?' do
+    assert_permit @user, Article, %w(index? show?)
+  end
+
   # this will result in a
   # PolicyAssertions::MissingBlockParameters error
   test 'show?' do

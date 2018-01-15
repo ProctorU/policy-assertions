@@ -197,8 +197,16 @@ class ValidBlockParametersTest
       assert_permit nil, Article, 'index?', 'long_action?'
     end
 
+    test 'assert_permit index? as array' do
+      assert_permit nil, Article, %w(index? long_action?)
+    end
+
     test 'destroy?' do
       refute_permit nil, Article, 'destroy?'
+    end
+
+    test 'refute_permit destroy? as array' do
+      refute_permit nil, Article, %w(destroy?)
     end
   end
 end
