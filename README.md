@@ -78,8 +78,18 @@ class ArticlePolicyTest < PolicyAssertions::Test
 end
 ```
 
+If policies are namespaced, the invocation of the class name should follow the same syntax as Pundit.
+
+```ruby
+# Test that the Organizations::Article model allows index and show
+# for any site visitor. nil is passed in for the user.
+def test_index_and_show
+  assert_permit nil, [:organizations, Article]
+end
+
+```
 ### Test method naming
-policy-assertions can read the permissions to test from the method name. This will only work when using the minitest def test_name syntax, it does not work for the Rails test block helper.
+policy-assertions can read the permissions to test from the method name. This will only work when using the minitest def test_name syntax; when using the block syntax, you must explicitly pass the permission names.
 
 ```ruby
 # Good
@@ -92,10 +102,9 @@ end
 def test_show_and_index
 end
 
-# Not good
-# The permission cannot be read from this block.
+# Good block syntax
+# The permission cannot be automatically read, so you must pass the policy names directly.
 test 'create' do
- # passing the permissions to the assert or refute is ok.
  refute_permit nil, Article, 'create?', 'new?'
 end
 ```
