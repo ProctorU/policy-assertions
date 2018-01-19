@@ -16,7 +16,7 @@ require 'policy_assertions/configuration'
 module PolicyAssertions
   class Test < ActiveSupport::TestCase
     def assert_permit(user, record, *permissions)
-      get_permissions(permissions).each do |permission|
+      get_permissions(permissions.flatten).each do |permission|
         policy = Pundit.policy!(user, record)
         assert policy.public_send(permission),
                "Expected #{policy.class.name} to grant #{permission} "\
@@ -25,7 +25,7 @@ module PolicyAssertions
     end
 
     def refute_permit(user, record, *permissions)
-      get_permissions(permissions).each do |permission|
+      get_permissions(permissions.flatten).each do |permission|
         policy = Pundit.policy!(user, record)
         refute policy.public_send(permission),
                "Expected #{policy.class.name} not to grant #{permission} "\
