@@ -1,9 +1,19 @@
 # policy-assertions
+
 [![Build Status](https://circleci.com/gh/ProctorU/policy-assertions.svg?style=shield&circle-token=7084a829c9e63b415f59e627d9e4ee90db7d2afa)](https://circleci.com/gh/ProctorU/policy-assertions) [![Gem Version](https://badge.fury.io/rb/policy-assertions.svg)](https://badge.fury.io/rb/policy-assertions)
 
 Minitest test assertions for [Pundit](https://github.com/elabs/pundit) policies.
 
 policy-assertions provides a test class for easy Pundit testing. The test class provides assertions and refutations for policies and strong parameters.
+
+## Table on contents
+
+* [Installation](#installation)
+* [Usage](#usage)
+* [Available test methods](#test-method-naming)
+* [Configuration](#configuration)
+* [Developing](#developing)
+* [Credits](#credits)
 
 ## Installation
 
@@ -21,7 +31,7 @@ Or install it yourself as:
 
     $ gem install policy-assertions
 
-**Add require policy\_assertions to test\_helper.rb**
+**Add require policy_assertions to test_helper.rb**
 
 ```ruby
 require 'policy_assertions'
@@ -31,10 +41,10 @@ require 'policy_assertions'
 
 policy-assertions is intended to make testing Pundit policies as simple as possible. The gem adds the following helpers:
 
-- PolicyAssertions::Test class
-- parses permissions to test from method name
-- assert\_permit and refute\_permit methods
-- assert\_strong\_parameters
+* PolicyAssertions::Test class
+* parses permissions to test from method name
+* assert_permit and refute_permit methods
+* assert_strong_parameters
 
 The following code sample illustrates the intended use of this gem.
 
@@ -86,9 +96,10 @@ If policies are namespaced, the invocation of the class name should follow the s
 def test_index_and_show
   assert_permit nil, [:organizations, Article]
 end
-
 ```
-### Test method naming
+
+## Test method naming
+
 policy-assertions can read the permissions to test from the method name. This will only work when using the minitest def test_name syntax; when using the block syntax, you must explicitly pass the permission names.
 
 ```ruby
@@ -108,18 +119,21 @@ test 'create' do
  refute_permit nil, Article, 'create?', 'new?'
 end
 ```
+
 Define multiple permissions in a method name by separating the permissions using '\_and\_'.
 
 See the configuration section for changing the separator value.
 
-### assert\_permit and refute\_permit
+### assert_permit and refute_permit
+
 These methods take the following parameters:
 
-- User to authorize
-- Model or instance to authorize
-- Optional array of permissions. They should match the permission method name exactly.
+* User to authorize
+* Model or instance to authorize
+* Optional array of permissions. They should match the permission method name exactly.
 
 #### Passing permissions to assert and refute
+
 When permissions are passed to assert or refute the test method name is ignored and does not need to match a policy permission.
 
 ```ruby
@@ -133,6 +147,7 @@ end
 ```
 
 ### Using the rails test block helper
+
 policy-assertions will work with the rails test block helper but it cannot parse the permissions. If a test block is used and the permissions are not passed to the assert and refute methods a PolicyAssertions::MissingBlockParameters error will be thrown.
 
 ```ruby
@@ -155,6 +170,7 @@ end
 ```
 
 ### Strong Parameters
+
 Since Pundit offers a [permitted_attributes](https://github.com/elabs/pundit#strong-parameters) helper, policy-assertions provides an assert method for testing.
 
 ```ruby
@@ -171,17 +187,39 @@ class ArticlePolicyTest < PolicyAssertions::Test
   end
 end
 ```
-## Configure
+
+## Configuration
+
 Use the following in your test helper to change the test definition permissions separator.
 
 ```ruby
 PolicyAssertions.config.separator = '__separator__'
 ```
 
-## Contributing
+## Developing
 
 1. Fork it ( https://github.com/[my-github-username]/policy-assertions/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes with tests (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
+
+## Credits
+
+Policy-assertions is maintained and funded by [ProctorU](https://twitter.com/ProctorU),
+a simple online proctoring service that allows you to take exams or
+certification tests at home.
+
+We'd like to thank [@ksimmons](https://github.com/ksimmons) for being the original creator of policy-assertions and allowing us to maintain the project.
+
+<br>
+
+<p align="center">
+  <a href="https://twitter.com/ProctorUEng">
+    <img src="https://s3-us-west-2.amazonaws.com/dev-team-resources/procki-eyes.svg" width=108 height=72>
+  </a>
+
+  <h3 align="center">
+    <a href="https://twitter.com/ProctorUEng">ProctorU Engineering & Design</a>
+  </h3>
+</p>
