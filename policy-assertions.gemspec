@@ -6,8 +6,8 @@ require 'policy_assertions/version'
 Gem::Specification.new do |spec|
   spec.name          = "policy-assertions"
   spec.version       = PolicyAssertions::VERSION
-  spec.authors       = ['Kevin Simmons']
-  spec.email         = ['kevin.p.simmons@gmail.com']
+  spec.authors       = ['ProctorU']
+  spec.email         = ['engineering@proctoru.com']
   spec.summary       = %q{Minitest assertions for Pundit policies.}
   spec.description   = %q{Minitest assertions for Pundit policies.}
   spec.homepage      = 'https://github.com/ksimmons/policy-assertions'
