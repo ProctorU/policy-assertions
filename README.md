@@ -6,7 +6,7 @@ Minitest test assertions for [Pundit](https://github.com/elabs/pundit) policies.
 
 policy-assertions provides a test class for easy Pundit testing. The test class provides assertions and refutations for policies and strong parameters.
 
-## Table on contents
+## Table of contents
 
 * [Installation](#installation)
 * [Usage](#usage)
@@ -100,7 +100,7 @@ end
 
 ## Test method naming
 
-policy-assertions can read the permissions to test from the method name. This will only work when using the minitest def test_name syntax; when using the block syntax, you must explicitly pass the permission names.
+policy-assertions can read the permissions to test from the method name. This will only work when using the minitest def test_name syntax. When using the block syntax, you must explicitly pass the permission names.
 
 ```ruby
 # Good
@@ -134,7 +134,7 @@ These methods take the following parameters:
 
 #### Passing permissions to assert and refute
 
-When permissions are passed to assert or refute the test method name is ignored and does not need to match a policy permission.
+When permissions are passed to assert or refute, the test method name is ignored and does not need to match a policy permission.
 
 ```ruby
 class ArticlePolicyTest < PolicyAssertions::Test
@@ -148,7 +148,7 @@ end
 
 ### Using the rails test block helper
 
-policy-assertions will work with the rails test block helper but it cannot parse the permissions. If a test block is used and the permissions are not passed to the assert and refute methods a PolicyAssertions::MissingBlockParameters error will be thrown.
+policy-assertions will work with the rails test block helper but it cannot parse the permissions. If a test block is used and the permissions are not passed to the `assert` and `refute` methods, a PolicyAssertions::MissingBlockParameters error will be thrown.
 
 ```ruby
 class ArticlePolicyTest < PolicyAssertions::Test
