@@ -102,6 +102,17 @@ class AssertionsTest < Minitest::Test
     assert test_runner.passed?
   end
 
+  def test_permission_failed_as_assert_not_permitted
+    test_runner = policy_class do
+      def test_create
+        assert_not_permitted nil, Article
+      end
+    end.new :test_create
+
+    test_runner.run
+    assert test_runner.passed?
+  end
+
   def test_destroy
     test_runner = policy_class do
       def test_destroy
@@ -205,6 +216,10 @@ class ValidBlockParametersTest
       refute_permit nil, Article, 'destroy?'
     end
 
+    test 'destroy? with assert_not_permitted' do
+      assert_not_permitted nil, Article, 'destroy?'
+    end
+    
     test 'refute_permit destroy? as array' do
       refute_permit nil, Article, %w(destroy?)
     end
