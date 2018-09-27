@@ -123,6 +123,21 @@ class AssertionsTest < Minitest::Test
     test_runner.run
     assert test_runner.passed?
   end
+
+  def test_described_class
+    test_runner = custom_policy_class do
+      def described_class
+        CustomPolicy
+      end
+
+      def test_new
+        assert_permit User.new(100), Article.new(100)
+      end
+    end.new :test_new
+
+    test_runner.run
+    assert test_runner.passed?
+  end
 end
 
 class StrongParametersTest < Minitest::Test

@@ -17,7 +17,7 @@ module PolicyAssertions
   class Test < ActiveSupport::TestCase
     def assert_permit(user, record, *permissions)
       get_permissions(permissions.flatten).each do |permission|
-        policy = Pundit.policy!(user, record)
+        policy = find_policy!(user, record)
         assert policy.public_send(permission),
                "Expected #{policy.class.name} to grant #{permission} "\
                "on #{record} for #{user} but it didn't"
@@ -26,7 +26,7 @@ module PolicyAssertions
 
     def refute_permit(user, record, *permissions)
       get_permissions(permissions.flatten).each do |permission|
-        policy = Pundit.policy!(user, record)
+        policy = find_policy!(user, record)
         refute policy.public_send(permission),
                "Expected #{policy.class.name} not to grant #{permission} "\
                "on #{record} for #{user} but it did"
@@ -35,7 +35,7 @@ module PolicyAssertions
     alias assert_not_permitted refute_permit
 
     def assert_strong_parameters(user, record, params_hash, allowed_params)
-      policy = Pundit.policy!(user, record)
+      policy = find_policy!(user, record)
 
       param_key = find_param_key(record)
 
@@ -82,6 +82,11 @@ module PolicyAssertions
       else
         caller[2][/`.*'/][1..-2]
       end
+    end
+
+    def find_policy!(user, record)
+      described_policy = self.respond_to?(:described_class) ? described_class : nil
+      described_policy ? described_policy.new(user, record) : Pundit.policy!(user, record)
     end
   end
 end

@@ -15,6 +15,15 @@ def policy_class(&block)
   klass
 end
 
+def custom_policy_class(&block)
+  klass = Class.new(PolicyAssertions::Test, &block)
+  def klass.name
+    'CustomPolicyTest'
+  end
+
+  klass
+end
+
 class User
   def self.policy_class
     PersonPolicy
@@ -90,6 +99,19 @@ class PersonPolicy
 
   def permitted_attributes
     (@user && @user.id == 1) ? [:user_id, :name, :role] : [:user_id, :name]
+  end
+end
+
+class CustomPolicy
+  attr_reader :user, :record
+
+  def initialize(user, record)
+    @user = user
+    @record = record
+  end
+
+  def new?
+    record.is_a?(Article)
   end
 end
 
