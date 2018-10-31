@@ -7,10 +7,10 @@ Gem::Specification.new do |spec|
   spec.name          = "policy-assertions"
   spec.version       = PolicyAssertions::VERSION
   spec.authors       = ['ProctorU']
-  spec.email         = ['engineering@proctoru.com']
+  spec.email         = ['engineering.team@proctoru.com']
   spec.summary       = %q{Minitest assertions for Pundit policies.}
   spec.description   = %q{Minitest assertions for Pundit policies.}
-  spec.homepage      = 'https://github.com/ksimmons/policy-assertions'
+  spec.homepage      = 'https://github.com/proctoru/policy-assertions'
   spec.license       = "MIT"
 
   spec.required_ruby_version = '>= 1.9.3'
