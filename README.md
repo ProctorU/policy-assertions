@@ -198,6 +198,46 @@ Use the following in your test helper to change the test definition permissions 
 PolicyAssertions.config.separator = '__separator__'
 ```
 
+## Test Output Results
+
+You may find that the output of certain tests results are confusing. e.g.:
+
+```shell
+Expected ProjectPolicy to grant update? on #<Project:0x00007f7d04514ef0> for #<User:0x00007f7d045001a8> but it didn't
+```
+
+What is `#<User:0x00007f7d045001a8>`? A way to solve this problem is to simply monkey patch the `to_s` method within your tests.
+
+```ruby
+# e.g. test_helper
+ENV['RAILS_ENV'] ||= 'test'
+require_relative '../config/environment'
+require 'rails/test_help'
+require 'policy_assertions'
+
+## Add in this module
+module PatchUser
+  refine User do
+    def to_s
+      email
+    end
+  end
+end
+
+# Apply the monkey patch only here
+class ActiveSupport::TestCase  
+  using PatchUser
+  
+  # etc etc.
+end
+```
+
+After doing that, you will get more meaningful test message outputs:
+
+```shell
+Expected ProjectPolicy to grant update? on #<Project:0x00007f7d04514ef0> for freddie@queen.com but it didn't
+```
+
 ## Developing
 
 1. Fork it ( https://github.com/[my-github-username]/policy-assertions/fork )
