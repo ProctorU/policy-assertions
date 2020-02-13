@@ -21,6 +21,12 @@ Add this line to your application's Gemfile:
 
 ```ruby
 gem 'policy-assertions'
+
+# if using Rails you can add it to your test block:
+
+group :test do
+  gem 'policy-assertions'
+end
 ```
 
 And then execute:
